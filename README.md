@@ -11,6 +11,9 @@ Clone repository to your machine. Run the command:
 
 `git clone https://github.com/MsZHHS/2024SEWebPages.git`
 
+Change to the new directory
+
+`cd 2024SEWebPages`
 
 ### 2
 
