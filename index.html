@@ -67,7 +67,7 @@ box-sizing: border-box;
 
       files.forEach(file => {
 	if (file.name === 'index.html') return;
-        if (file.name.endsWith('.html')) {
+        if (file.name.endsWith('.html') || file.name.endsWith('.htm')) {
           const link = document.createElement('a');
           link.href = '#';
           link.textContent = file.name;
