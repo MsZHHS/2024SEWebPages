@@ -51,7 +51,8 @@ box-sizing: border-box;
       for (const file of files) {
         if (file.type === 'file') {
           allFiles.push(file);
-        } else if (file.type === 'dir') {
+        } else if (file.type === 'dir') {	
+continue;
           const nestedFiles = await getAllFiles(file.path);
           allFiles = allFiles.concat(nestedFiles);
         }
@@ -66,6 +67,7 @@ box-sizing: border-box;
       const resources = {};
 
       files.forEach(file => {
+	console.log(file);
 	if (file.name === 'index.html') return;
         if (file.name.endsWith('.html') || file.name.endsWith('.htm')) {
           const link = document.createElement('a');
@@ -75,7 +77,7 @@ box-sizing: border-box;
           linksContainer.appendChild(link);
           linksContainer.appendChild(document.createElement('br'));
         } else if (file.name.endsWith('.css') || file.name.endsWith('.js') || /\.(jpg|jpeg|png|gif|svg)$/.test(file.name)) {
-          resources[file.path] = file.download_url;
+          resources[file.name] = file.download_url;
         }
       });
 
