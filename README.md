@@ -1,5 +1,17 @@
 # 2024SEWebPages
 
+### To see others changes
+
+In the 2024SEWebPages directory, run the following commandS:
+
+`git checkout main`
+
+`git pull`
+
+Open the index.html file and use the links to view other websites
+
+### To put your changes on GitHub
+
 ### 1
 Open Powershell and navigate to Desktop with the command:
 

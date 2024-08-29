@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GitHub File Viewer</title>
   <style>
-	* {
-margin: 0;
-padding: 0;
-box-sizing: border-box;
-}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
     body {
       font-family: Arial, sans-serif;
@@ -22,17 +22,17 @@ box-sizing: border-box;
 
   <div id="content">
     <!-- Loaded HTML content will appear here -->
-
-  <div id="links-container">
-    <!-- Links will be inserted here -->
-  </div>
+    <div id="links-container">
+      <!-- Links will be inserted here -->
+    </div>
   </div>
 
   <script>
+    const repoOwner = 'MsZHHS'; // Replace with your GitHub username or organization
+    const repoName = '2024SEWebPages'; // Replace with your GitHub repository name
+
     async function fetchFileList(path = '') {
-      const repoOwner = 'MsZHHS'; // Replace with your GitHub username or organization
-      const repoName = '2024SEWebPages';   // Replace with your GitHub repository name
-      const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/contents`;
+      const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${path}`;
 
       try {
         const response = await fetch(apiUrl);
@@ -66,12 +66,13 @@ box-sizing: border-box;
       const resources = {};
 
       files.forEach(file => {
-	if (file.name === 'index.html') return;
+        if (file.path === 'index.html') return; // Skip index.html in the links list
+
         if (file.name.endsWith('.html') || file.name.endsWith('.htm')) {
           const link = document.createElement('a');
           link.href = '#';
-          link.textContent = file.name;
-          link.addEventListener('click', () => loadHtmlFile(file.download_url, files));
+          link.textContent = file.path;
+          link.addEventListener('click', () => loadHtmlFile(file.download_url, file.path));
           linksContainer.appendChild(link);
           linksContainer.appendChild(document.createElement('br'));
         } else if (file.name.endsWith('.css') || file.name.endsWith('.js') || /\.(jpg|jpeg|png|gif|svg)$/.test(file.name)) {
@@ -82,7 +83,7 @@ box-sizing: border-box;
       window.resources = resources;
     }
 
-    async function loadHtmlFile(url, allFiles) {
+    async function loadHtmlFile(url, basePath) {
       try {
         const response = await fetch(url);
         if (!response.ok) throw new Error('Network response was not ok');
@@ -92,7 +93,7 @@ box-sizing: border-box;
         iframe.style.width = '100%';
         iframe.style.height = '100vh';
         iframe.style.border = 'none';
-        document.getElementById('content').innerHTML = ''; 
+        document.getElementById('content').innerHTML = '';
         document.getElementById('content').appendChild(iframe);
         const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
 
@@ -100,17 +101,17 @@ box-sizing: border-box;
         iframeDoc.write(html);
         iframeDoc.close();
 
-        handleResources(iframeDoc);
+        handleResources(iframeDoc, basePath);
       } catch (error) {
         console.error('Error loading file:', error);
       }
     }
 
-    function handleResources(iframeDoc) {
+    function handleResources(iframeDoc, basePath) {
       const cssLinks = iframeDoc.querySelectorAll('link[rel="stylesheet"]');
       cssLinks.forEach(link => {
         const href = link.getAttribute('href');
-        const fullUrl = resolveUrl(href);
+        const fullUrl = resolveUrl(href, basePath);
         const newLink = document.createElement('link');
         newLink.rel = 'stylesheet';
         newLink.href = fullUrl;
@@ -120,15 +121,17 @@ box-sizing: border-box;
       const scripts = iframeDoc.querySelectorAll('script[src]');
       scripts.forEach(script => {
         const src = script.getAttribute('src');
-        const fullUrl = resolveUrl(src);
+        const fullUrl = resolveUrl(src, basePath);
         const newScript = document.createElement('script');
         newScript.src = fullUrl;
         iframeDoc.body.appendChild(newScript);
       });
     }
 
-    function resolveUrl(path) {
-      return window.resources[path] || path;
+    function resolveUrl(path, basePath) {
+      const baseDir = basePath ? basePath.replace(/[^/]*$/, '') : '';
+      const resolvedPath = new URL(path, baseDir).href;
+      return window.resources[resolvedPath] || resolvedPath;
     }
 
     renderLinks();
