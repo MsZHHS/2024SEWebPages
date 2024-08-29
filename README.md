@@ -2,7 +2,9 @@
 
 ### To see others changes
 
-In the 2024SEWebPages directory, run the command to get all changes.
+In the 2024SEWebPages directory, run the following commandS:
+
+`git checkout main`
 
 `git pull`
 
