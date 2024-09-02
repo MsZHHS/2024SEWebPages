@@ -1,0 +1,178 @@
+@font-face {
+  font-family: 'Ramadhan Mubarok';
+  src: url('RamadhanMubarok-Regular.woff2') format('woff2'),
+      url('RamadhanMubarok-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.circle {
+  height: 24px;
+  width: 24px;
+  border-radius: 24px;
+  background-color: black;
+  position: fixed; 
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 99999999; /* so that it stays on top of all other elements */
+}
+
+
+header {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* Adjust height as needed */
+  background-image: url('https://svgshare.com/i/19sj.svg');
+  background-size: cover; /* Ensures the image covers the entire header */
+  background-position: center; /* Centers the image */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+  z-index: 0; /* Background is the lowest layer */
+}
+
+body {
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none;    /* Firefox */
+  -ms-user-select: none;     /* Internet Explorer/Edge */
+  user-select: none;         /* Standard */
+}
+
+
+
+
+
+
+
+
+@keyframes moveUp {
+  0% {
+      transform: translateY(100%); /* Start below the visible area */
+      opacity: 0; /* Optional: Start invisible */
+  }
+  100% {
+      transform: translateY(0); /* End at the original position */
+      opacity: 1; /* Optional: End fully visible */
+  }
+}
+
+
+.middle-image {
+  position: absolute;
+  top: -300px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1; /* Middle layer */
+  animation: moveUp 1.75s ease-in-out forwards; /* Adjust duration and easing as needed */
+
+}
+
+.middle-image img {
+  width: 100%;
+  height: auto; /* Maintain aspect ratio */
+}
+
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+  }
+  to {
+      opacity: 1;
+  }
+}
+
+
+.name {
+  position: absolute;
+  top: 50%; /* Adjust based on where you want your name */
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center the name horizontally and vertically */
+  z-index: 1; /* Position between background and middle image */
+  opacity: 0; /* Start invisible */
+  animation: fadeIn 1.5s ease-in-out 2s forwards; /* Delay to match middle image animation */
+}
+
+.name h1 {
+  font-family: 'Ramadhan Mubarok'; /* Apply the custom font */
+  color: #fff;
+  font-size: 40vw;
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  margin: 0;
+  padding: 0;
+  z-index: 2;
+  opacity: 0.5;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5); /* Add a subtle shadow */
+}
+
+.overlay-image {
+  position: absolute;
+  top: -300px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3; /* Top layer */
+}
+
+.overlay-image img {
+  width: 100%; /* Make the image span the full width of the header */
+  height: auto; /* Make the image span the full height of the header */
+  object-fit: cover; /* Ensures the image covers the entire area */
+}
+
+#about-me {
+  position: relative;
+  width: 100%; /* Ensures full width */
+  height: 100vh; /* Full screen height */
+  background-image: url('https://svgshare.com/i/19uV.svg');
+  background-size: cover; /* Ensures the image covers the entire section */
+  background-position: top center; /* Centers the image */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+  color: #fff; /* Ensure text is readable */
+  background-size: 250vh; /*random number bc it is bugging for some reason. make it unaligned with anything but 1080p monitors.*/
+  overflow: hidden;
+}
+
+#about-me h2{
+  font-family: 'Ramadhan Mubarok';
+  font-size: 30vw; /* Adjust based on screen size */
+  margin-top: 40vh;
+  text-align: center;
+  margin-bottom: 20px;
+  position: relative;
+  right: -100%;  /* Start off-screen to the left */
+  opacity: 1;  /* Initially invisible */
+  transition: right 1s ease-out;  /* Smooth transition */
+}
+
+
+#new-section {
+  background-color: #7a2316;  /* Replace with your desired color */
+  height: 130vh;  /* Replace with your desired height */
+  padding: 0px;  /* Optional: Add padding inside the section */
+  color: #fff;  /* Optional: Set text color to contrast with the background */
+  display: flex;  /* Optional: Flexbox for content alignment */
+  justify-content: center;  /* Optional: Center content horizontally */
+  align-items: center;  /* Optional: Center content vertically */
+  text-align: center;  /* Optional: Center text */
+}
+
+#new-section p{
+  font-family: 'Ramadhan Mubarok';
+  font-size: 10vw; /* Adjust based on screen size */
+}
+
+
+
